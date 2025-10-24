@@ -1,0 +1,20 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Website tĩnh phong cách futuristic, 3D, hiện đại, sử dụng HTML/CSS/JS + Three.js. Trang Home có Hero 3D, About (timeline + counters), Skills, Projects (carousel + modal), Testimonials; trang Blog có ít nhất 9 bài viết tiếng Việt.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ttriIT/Portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ttriIT/Portfolio/issues"
+  },
+  "homepage": "https://github.com/ttriIT/Portfolio#readme"
+}

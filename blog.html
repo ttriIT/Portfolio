@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FuturNet Blog — Java & JavaScript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">FuturNet</div>
+    <nav class="nav__links">
+      <a href="index.html">Home</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <h1 class="section__title">Blog — Kiến thức & Kinh nghiệm</h1>
+
+    <div class="posts">
+      <article class="post card float">
+        <h2>1. Tổng quan TCP/UDP trong Java</h2>
+        <p>TCP đảm bảo độ tin cậy, còn UDP ưu tiên tốc độ. Trong Java, dùng <code>Socket</code>/<code>ServerSocket</code> cho TCP và <code>DatagramSocket</code> cho UDP. Chọn giao thức dựa trên yêu cầu: độ trễ, lỗi chấp nhận được, và mô hình dữ liệu.</p>
+      </article>
+      <article class="post card float">
+        <h2>2. Lập trình Socket với Java (blocking vs non-blocking)</h2>
+        <p>Blocking đơn giản nhưng khó scale; NIO non-blocking cho phép multiplexing với <code>Selector</code>. Gợi ý: bắt đầu blocking để hiểu cơ chế, sau đó chuyển sang NIO cho hiệu năng cao.</p>
+      </article>
+      <article class="post card float">
+        <h2>3. WebSocket với JavaScript: kiến trúc và fallback</h2>
+        <p>WebSocket tạo kênh 2 chiều, phù hợp realtime. Hãy thêm fallback như SSE hoặc long-polling. Trên client, quản lý reconnect, heartbeat (ping/pong) và backoff để ổn định.</p>
+      </article>
+      <article class="post card float">
+        <h2>4. Thiết kế RESTful API với Spring Boot</h2>
+        <p>Dùng <code>@RestController</code>, phân tầng service/repository rõ ràng, trả về DTO, bật validation. Thêm rate-limit, caching, và observability (Micrometer) để theo dõi độ trễ.</p>
+      </article>
+      <article class="post card float">
+        <h2>5. Async/Await trong JS cho I/O mạng</h2>
+        <p>Async/Await giúp code dễ đọc. Bọc promise với <code>try/catch</code>, dùng <code>AbortController</code> để hủy request, và batch đồng thời bằng <code>Promise.allSettled</code> khi cần.</p>
+      </article>
+      <article class="post card float">
+        <h2>6. Streaming dữ liệu với Node.js</h2>
+        <p>Stream giảm bộ nhớ và tăng throughput. Áp dụng cho tải file, proxy data, hoặc truyền sự kiện. Kết hợp backpressure để tránh nghẽn và tối ưu pipeline.</p>
+      </article>
+      <article class="post card float">
+        <h2>7. Load Balancing và Scaling</h2>
+        <p>Scale theo chiều ngang với reverse proxy (Nginx), sticky session khi cần, và health-check. Sử dụng hàng đợi (RabbitMQ/Kafka) cho xử lý bất đồng bộ.</p>
+      </article>
+      <article class="post card float">
+        <h2>8. Bảo mật API với JWT</h2>
+        <p>Luôn ký JWT, đặt expiry ngắn, lưu refresh token an toàn, và kiểm tra quyền ở backend. Cân nhắc rotate token và thêm audit logs.</p>
+      </article>
+      <article class="post card float">
+        <h2>9. Kiểm thử hiệu năng: JMH và k6</h2>
+        <p>JMH đo micro-benchmark cho Java; k6 kiểm thử tải cho API. Thiết lập baseline, theo dõi throughput, p95/p99 latency và lỗi. Tối ưu dựa trên profile thực tế.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer glass">
+    <p>© 2025 FuturNet Blog — Java & JavaScript Networking</p>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

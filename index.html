@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FuturNet — Lập trình mạng với Java & JavaScript</title>
+  <meta name="description" content="Blog cá nhân chia sẻ lập trình mạng, Java & JavaScript với phong cách futuristic, 3D, hiện đại." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">FuturNet</div>
+    <nav class="nav__links">
+      <a href="index.html" class="active">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero__content">
+      <img class="hero__avatar" alt="Lập trình viên" src="https://images.unsplash.com/photo-1556157382-97eda2fcec06?q=80&w=800&auto=format&fit=crop" />
+      <h1 class="hero__title neon">Lập trình mạng • Java & JavaScript</h1>
+      <p class="hero__subtitle">Chia sẻ kiến thức, kinh nghiệm và dự án thực chiến với phong cách hiện đại, 3D, giàu tương tác.</p>
+      <div class="hero__actions">
+        <a href="#about" class="btn btn--primary glow">Hành trình học</a>
+        <a href="blog.html" class="btn btn--secondary">Xem Blog</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <h2 class="section__title">About — Hành trình học lập trình</h2>
+    <div class="timeline">
+      <div class="timeline__item card float" data-year="2018">
+        <h3>Bắt đầu với Java</h3>
+        <p>Làm quen OOP, thread, socket; viết công cụ CLI kết nối TCP.</p>
+      </div>
+      <div class="timeline__item card float" data-year="2020">
+        <h3>Web thời gian thực với JS</h3>
+        <p>Node.js, WebSocket, SSE; xây chat app, dashboard realtime.</p>
+      </div>
+      <div class="timeline__item card float" data-year="2022">
+        <h3>Hệ thống phân tán</h3>
+        <p>REST, gRPC, scaling, caching, observability; triển khai cloud.</p>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric card glass" id="m1">
+        <div class="metric__value counter" data-target="150">0</div>
+        <div class="metric__label">Bài viết kỹ thuật</div>
+      </div>
+      <div class="metric card glass" id="m2">
+        <div class="metric__value counter" data-target="35">0</div>
+        <div class="metric__label">Dự án đã làm</div>
+      </div>
+      <div class="metric card glass" id="m3">
+        <div class="metric__value counter" data-target="12">0</div>
+        <div class="metric__label">Công cụ tự xây</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <h2 class="section__title">Skills — 3D & mạng</h2>
+    <div class="skills">
+      <div class="skill card pulse"><span>☕</span><p>Java Networking</p></div>
+      <div class="skill card pulse"><span>🟨</span><p>JavaScript Realtime</p></div>
+      <div class="skill card pulse"><span>🌐</span><p>HTTP/REST</p></div>
+      <div class="skill card pulse"><span>🔐</span><p>JWT/OAuth2</p></div>
+      <div class="skill card pulse"><span>⚙️</span><p>Concurrency</p></div>
+      <div class="skill card pulse"><span>📡</span><p>WebSocket</p></div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <h2 class="section__title">Projects — Carousel & Parallax</h2>
+    <div class="carousel">
+      <button class="carousel__btn" data-dir="-1">‹</button>
+      <div class="carousel__track">
+        <div class="project card" data-title="Chat Realtime" data-desc="Node.js + WebSocket, UI neon glow, scale horizontal">
+          <div class="project__bg parallax"></div>
+          <h3>Chat Realtime</h3>
+          <button class="btn btn--ghost">Xem chi tiết</button>
+        </div>
+        <div class="project card" data-title="TCP Monitor" data-desc="Java NIO, phân tích luồng TCP, hiển thị 3D">
+          <div class="project__bg parallax"></div>
+          <h3>TCP Monitor</h3>
+          <button class="btn btn--ghost">Xem chi tiết</button>
+        </div>
+        <div class="project card" data-title="Metrics Dashboard" data-desc="SSE streaming, biểu đồ realtime, tối giản">
+          <div class="project__bg parallax"></div>
+          <h3>Metrics Dashboard</h3>
+          <button class="btn btn--ghost">Xem chi tiết</button>
+        </div>
+      </div>
+      <button class="carousel__btn" data-dir="1">›</button>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section">
+    <h2 class="section__title">Testimonials — Trích dẫn động</h2>
+    <div class="quotes card glass">
+      <blockquote class="quote active">“Bài viết rõ ràng, sâu sắc; phù hợp cả người mới.” — Minh</blockquote>
+      <blockquote class="quote">“Ví dụ thực chiến giúp hiểu WebSocket cực nhanh.” — Hạnh</blockquote>
+      <blockquote class="quote">“Phong cách hiện đại, nội dung chất lượng.” — Tuấn</blockquote>
+    </div>
+  </section>
+
+  <footer class="footer glass">
+    <p>© 2025 FuturNet — Made with Java, JavaScript & Three.js</p>
+  </footer>
+
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="assets/js/three-bg.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
