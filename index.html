@@ -1,123 +1,255 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FuturNet — Lập trình mạng với Java & JavaScript</title>
-  <meta name="description" content="Blog cá nhân chia sẻ lập trình mạng, Java & JavaScript với phong cách futuristic, 3D, hiện đại." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css" />
-</head>
-<body>
-  <header class="nav glass">
-    <div class="nav__brand">FuturNet</div>
-    <nav class="nav__links">
-      <a href="index.html" class="active">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-    </nav>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio — Lập trình viên Front-end</title>
+    <meta
+      name="description"
+      content="Portfolio cá nhân của lập trình viên chuyên về Java & JavaScript với phong cách futuristic, 3D, hiện đại."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="nav glass">
+      <div class="nav__brand">Portfolio</div>
+      <nav class="nav__links">
+        <a href="index.html" class="active">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </header>
 
-  <section class="hero">
-    <canvas id="hero-canvas"></canvas>
-    <div class="hero__content">
-      <img class="hero__avatar" alt="Lập trình viên" src="https://images.unsplash.com/photo-1556157382-97eda2fcec06?q=80&w=800&auto=format&fit=crop" />
-      <h1 class="hero__title neon">Lập trình mạng • Java & JavaScript</h1>
-      <p class="hero__subtitle">Chia sẻ kiến thức, kinh nghiệm và dự án thực chiến với phong cách hiện đại, 3D, giàu tương tác.</p>
-      <div class="hero__actions">
-        <a href="#about" class="btn btn--primary glow">Hành trình học</a>
-        <a href="blog.html" class="btn btn--secondary">Xem Blog</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="about" class="section">
-    <h2 class="section__title">About — Hành trình học lập trình</h2>
-    <div class="timeline">
-      <div class="timeline__item card float" data-year="2018">
-        <h3>Bắt đầu với Java</h3>
-        <p>Làm quen OOP, thread, socket; viết công cụ CLI kết nối TCP.</p>
-      </div>
-      <div class="timeline__item card float" data-year="2020">
-        <h3>Web thời gian thực với JS</h3>
-        <p>Node.js, WebSocket, SSE; xây chat app, dashboard realtime.</p>
-      </div>
-      <div class="timeline__item card float" data-year="2022">
-        <h3>Hệ thống phân tán</h3>
-        <p>REST, gRPC, scaling, caching, observability; triển khai cloud.</p>
-      </div>
-    </div>
-
-    <div class="metrics">
-      <div class="metric card glass" id="m1">
-        <div class="metric__value counter" data-target="150">0</div>
-        <div class="metric__label">Bài viết kỹ thuật</div>
-      </div>
-      <div class="metric card glass" id="m2">
-        <div class="metric__value counter" data-target="35">0</div>
-        <div class="metric__label">Dự án đã làm</div>
-      </div>
-      <div class="metric card glass" id="m3">
-        <div class="metric__value counter" data-target="12">0</div>
-        <div class="metric__label">Công cụ tự xây</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="skills" class="section">
-    <h2 class="section__title">Skills — 3D & mạng</h2>
-    <div class="skills">
-      <div class="skill card pulse"><span>☕</span><p>Java Networking</p></div>
-      <div class="skill card pulse"><span>🟨</span><p>JavaScript Realtime</p></div>
-      <div class="skill card pulse"><span>🌐</span><p>HTTP/REST</p></div>
-      <div class="skill card pulse"><span>🔐</span><p>JWT/OAuth2</p></div>
-      <div class="skill card pulse"><span>⚙️</span><p>Concurrency</p></div>
-      <div class="skill card pulse"><span>📡</span><p>WebSocket</p></div>
-    </div>
-  </section>
-
-  <section id="projects" class="section">
-    <h2 class="section__title">Projects — Carousel & Parallax</h2>
-    <div class="carousel">
-      <button class="carousel__btn" data-dir="-1">‹</button>
-      <div class="carousel__track">
-        <div class="project card" data-title="Chat Realtime" data-desc="Node.js + WebSocket, UI neon glow, scale horizontal">
-          <div class="project__bg parallax"></div>
-          <h3>Chat Realtime</h3>
-          <button class="btn btn--ghost">Xem chi tiết</button>
-        </div>
-        <div class="project card" data-title="TCP Monitor" data-desc="Java NIO, phân tích luồng TCP, hiển thị 3D">
-          <div class="project__bg parallax"></div>
-          <h3>TCP Monitor</h3>
-          <button class="btn btn--ghost">Xem chi tiết</button>
-        </div>
-        <div class="project card" data-title="Metrics Dashboard" data-desc="SSE streaming, biểu đồ realtime, tối giản">
-          <div class="project__bg parallax"></div>
-          <h3>Metrics Dashboard</h3>
-          <button class="btn btn--ghost">Xem chi tiết</button>
+    <section class="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero__content">
+        <img
+          class="hero__avatar"
+          alt="Lập trình viên"
+          src="./assets/images/profile.jpg"
+        />
+        <h1 class="hero__title neon">Nguyễn Thiện Trí Front-End Developer</h1>
+        <p class="hero__subtitle">
+          Tôi là một lập trình viên Frontend đam mê công nghệ và thiết kế. Với
+          tôi, mỗi dòng code đều góp phần tạo nên một trải nghiệm người dùng
+          trực quan, đẹp mắt và mượt mà. Tôi yêu thích việc biến ý tưởng thành
+          giao diện sống động bằng React, Tailwind CSS và các công cụ hiện đại
+          khác.
+        </p>
+        <div class="hero__actions">
+          <a href="#about" class="btn btn--primary glow">Xem Portfolio</a>
+          <a href="blog.html" class="btn btn--secondary">Blog Lập Trình</a>
         </div>
       </div>
-      <button class="carousel__btn" data-dir="1">›</button>
-    </div>
-  </section>
+    </section>
 
-  <section id="testimonials" class="section">
-    <h2 class="section__title">Testimonials — Trích dẫn động</h2>
-    <div class="quotes card glass">
-      <blockquote class="quote active">“Bài viết rõ ràng, sâu sắc; phù hợp cả người mới.” — Minh</blockquote>
-      <blockquote class="quote">“Ví dụ thực chiến giúp hiểu WebSocket cực nhanh.” — Hạnh</blockquote>
-      <blockquote class="quote">“Phong cách hiện đại, nội dung chất lượng.” — Tuấn</blockquote>
-    </div>
-  </section>
+    <section id="about" class="section">
+      <h2 class="section__title">About — Giới thiệu bản thân</h2>
+      <div class="about-content">
+        <div class="about-text card glass">
+          <p>
+            Xin chào, mình là <b>Nguyễn Thiện Trí</b> 👋 – một Frontend
+            Developer yêu thích việc biến những ý tưởng thành giao diện web mượt
+            mà và dễ dùng. Mình bắt đầu học lập trình vì tò mò về cách những
+            trang web vận hành, và càng làm càng thấy mê cảm giác “mọi thứ hiện
+            ra đúng như mình muốn”. Hiện tại, mình đã thực hiện 3 dự án cá nhân
+            sử dụng React, Node.js và TailwindCSS – từ những trang web đơn giản
+            đến ứng dụng có kết nối API và hệ thống người dùng cơ bản. Mình
+            thích tìm tòi, học cái mới và luôn cố gắng làm cho sản phẩm trông
+            đẹp hơn, chạy mượt hơn một chút mỗi ngày. Ngoài code, mình thường
+            dành thời gian đọc về UX/UI, xem demo project trên YouTube hoặc
+            chỉnh lại giao diện cho “vừa mắt hơn” Trong thời gian tới, mình muốn
+            nâng cấp kỹ năng React, tìm hiểu thêm Next.js và học cách làm web
+            thật tối ưu cho người dùng. Nếu bạn cũng yêu thích web đẹp và trải
+            nghiệm mượt mà – rất vui được kết nối với bạn 💬
+          </p>
+        </div>
+      </div>
 
-  <footer class="footer glass">
-    <p>© 2025 FuturNet — Made with Java, JavaScript & Three.js</p>
-  </footer>
+      <section id="timeline" class="section">
+        <h2 class="section__title">Hành trình chuyên môn — Frontend</h2>
+        <div class="timeline__grid">
+          <article class="timeline__item card glass reveal">
+            <div class="timeline__year">2022</div>
+            <h3 class="timeline__title">Nền tảng Frontend</h3>
+            <ul class="timeline__points">
+              <li>HTML5/CSS3, Flexbox/Grid, responsive và A11y cơ bản</li>
+              <li>JavaScript ES6: modules, DOM, events, fetch API</li>
+              <li>Git/GitHub, tối ưu UI mượt mà, hiệu ứng nhẹ</li>
+              <li>Xây portfolio và mini-projects thực hành</li>
+            </ul>
+          </article>
+          <article class="timeline__item card glass reveal">
+            <div class="timeline__year">2023</div>
+            <h3 class="timeline__title">Phát triển SPA & realtime</h3>
+            <ul class="timeline__points">
+              <li>Kiến trúc SPA, routing, quản lý state (Context/Redux)</li>
+              <li>Async/Await, tích hợp RESTful API, xử lý JWT</li>
+              <li>Realtime UI: WebSocket, SSE cập nhật trực tiếp</li>
+              <li>Vite/Webpack, code-splitting, lazy-load assets</li>
+            </ul>
+          </article>
+          <article class="timeline__item card glass reveal">
+            <div class="timeline__year">2024</div>
+            <h3 class="timeline__title">Hiệu năng & trải nghiệm nâng cao</h3>
+            <ul class="timeline__points">
+              <li>Performance: Lighthouse, bundle budget, caching</li>
+              <li>PWA: offline-first, service worker, push notifications</li>
+              <li>Design System, Accessibility AA, UI consistent</li>
+              <li>Three.js/WebGL nền động, CI/CD & testing (Jest/RTL)</li>
+            </ul>
+          </article>
+        </div>
+      </section>
 
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
-  <script src="assets/js/three-bg.js"></script>
-  <script src="assets/js/main.js"></script>
-</body>
+      <div class="metrics">
+        <div class="metric card glass" id="m1">
+          <div class="metric__value counter" data-target="9">0</div>
+          <div class="metric__label">Bài viết kỹ thuật</div>
+        </div>
+        <div class="metric card glass" id="m2">
+          <div class="metric__value counter" data-target="3">0</div>
+          <div class="metric__label">Dự án đã làm</div>
+        </div>
+        <div class="metric card glass" id="m3">
+          <div class="metric__value counter" data-target="3">0</div>
+          <div class="metric__label">Chứng chỉ</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <h2 class="section__title">Skills — 3D & mạng</h2>
+      <div class="skills">
+        <div class="skill card pulse">
+          <span>☕</span>
+          <p>Java Networking</p>
+        </div>
+        <div class="skill card pulse">
+          <span>🟨</span>
+          <p>JavaScript Realtime</p>
+        </div>
+        <div class="skill card pulse">
+          <span>🌐</span>
+          <p>HTTP/REST</p>
+        </div>
+        <div class="skill card pulse">
+          <span>🔐</span>
+          <p>JWT/OAuth2</p>
+        </div>
+        <div class="skill card pulse">
+          <span>⚙️</span>
+          <p>Concurrency</p>
+        </div>
+        <div class="skill card pulse">
+          <span>📡</span>
+          <p>WebSocket</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="certs" class="section">
+      <h2 class="section__title">Chứng chỉ — Professional Certifications</h2>
+      <div class="certs__grid">
+        <article class="cert card glass reveal">
+          <img
+            class="cert__img"
+            alt="Networking Basics"
+            src="./assets/images/image (1).png"
+          />
+          <h3 class="cert__title">Networking Basics</h3>
+          <p class="cert__issuer">Cisco Skills for All • 2025</p>
+          <div class="cert__actions">
+            <a
+              class="btn btn--secondary btn--sm"
+              href="./assets/certificates/Networking_Basics_certificate_tridz0901-gmail-com_a181e5be-8ae9-4347-9f50-dabb8b63dad4.pdf"
+              target="_blank"
+              >Xem chứng chỉ</a
+            >
+            <a
+              class="btn btn--accent btn--sm"
+              href="./assets/certificates/Networking_Basics_certificate_tridz0901-gmail-com_a181e5be-8ae9-4347-9f50-dabb8b63dad4.pdf"
+              download="Networking-Basics.pdf"
+              >Tải về</a
+            >
+          </div>
+        </article>
+        <article class="cert card glass reveal">
+          <img
+            class="cert__img"
+            alt="JavaScript Essentials 1"
+            src="./assets/images/image.png"
+          />
+          <h3 class="cert__title">JavaScript Essentials 1</h3>
+          <p class="cert__issuer">Cisco Skills for All • 2025</p>
+          <div class="cert__actions">
+            <a
+              class="btn btn--secondary btn--sm"
+              href="./assets/certificates/JavaScript_Essentials_1_certificate_tridz0901-gmail-com_78f9090a-dc33-4eb3-98d7-fa30a9fbecbf.pdf"
+              target="_blank"
+              >Xem chứng chỉ</a
+            >
+            <a
+              class="btn btn--accent btn--sm"
+              href="./assets/certificates/JavaScript_Essentials_1_certificate_tridz0901-gmail-com_78f9090a-dc33-4eb3-98d7-fa30a9fbecbf.pdf"
+              download="JavaScript-Essentials-1.pdf"
+              >Tải về</a
+            >
+          </div>
+        </article>
+        <article class="cert card glass reveal">
+          <img
+            class="cert__img"
+            alt="JavaScript Essentials 2"
+            src="./assets/images/image2.png"
+          />
+          <h3 class="cert__title">JavaScript Essentials 2</h3>
+          <p class="cert__issuer">Cisco Skills for All • 2025</p>
+          <div class="cert__actions">
+            <a
+              class="btn btn--secondary btn--sm"
+              href="./assets/certificates/JavaScript_Essentials_2_certificate_tridz0901-gmail-com_edf873b4-e439-40ea-b9e4-6864853f4594.pdf"
+              target="_blank"
+              >Xem chứng chỉ</a
+            >
+            <a
+              class="btn btn--accent btn--sm"
+              href="./assets/certificates/JavaScript_Essentials_2_certificate_tridz0901-gmail-com_edf873b4-e439-40ea-b9e4-6864853f4594.pdf"
+              download="JavaScript-Essentials-2.pdf"
+              >Tải về</a
+            >
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="testimonials" class="section">
+      <h2 class="section__title">Reviews</h2>
+      <div class="quotes card glass">
+        <blockquote class="quote active">
+          “Bài viết rõ ràng, sâu sắc; phù hợp cả người mới.” — Minh
+        </blockquote>
+        <blockquote class="quote">
+          “Ví dụ thực chiến giúp hiểu WebSocket cực nhanh.” — Hạnh
+        </blockquote>
+        <blockquote class="quote">
+          “Phong cách hiện đại, nội dung chất lượng.” — Tuấn
+        </blockquote>
+      </div>
+    </section>
+
+    <footer class="footer glass">
+      <p>© 2025 FuturNet — Made with Java, JavaScript & Three.js</p>
+    </footer>
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="assets/js/three-bg.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
 </html>

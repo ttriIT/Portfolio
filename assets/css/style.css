@@ -8,8 +8,90 @@
   --secondary: #b36bff;
   --accent: #00ffa3;
 }
-* { box-sizing: border-box; }
-html, body { margin:0; padding:0; background: radial-gradient(1200px at 10% 10%, var(--bg2), var(--bg)); color: var(--txt); font-family: Poppins, system-ui; }
+
+/* Thêm CSS cho post image và about-text */
+.post__image {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 180px;
+}
+
+.post__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.post:hover .post__image img {
+  transform: scale(1.05);
+}
+
+.about-content {
+  margin-bottom: 32px;
+}
+
+.about-text {
+  max-width: 800px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+
+.subsection__title {
+  font-family: Orbitron;
+  margin: 32px 0 16px;
+  color: var(--primary);
+}
+
+.btn--accent {
+   background: linear-gradient(135deg, var(--accent), var(--primary));
+   color: #041020;
+ }
+
+ /* Certifications section */
+ .certs__grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+   gap: 24px;
+   align-items: start;
+ }
+ .cert {
+   padding: 20px;
+   backdrop-filter: blur(10px);
+   background: linear-gradient(135deg, rgba(98,210,255,0.08), rgba(179,107,255,0.08));
+   border: 1px solid rgba(98,210,255,0.25);
+   box-shadow: 0 10px 30px rgba(0, 255, 163, 0.08);
+ }
+ .cert__title { font-family: Orbitron; font-weight: 600; margin: 8px 0; }
+ .cert__issuer { color: var(--muted); margin-bottom: 12px; }
+ .btn--sm { padding: 8px 12px; font-size: 0.9rem; }
+ .cert__img { width: 100%; height: clamp(120px, 22vw, 200px); object-fit: contain; border-radius: 12px; border: 1px solid rgba(98,210,255,0.25); margin-bottom: 12px; }
+ .cert__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* Timeline */
+  .timeline__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .timeline__item { padding: 20px; }
+  .timeline__year {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(0,255,163,0.15), rgba(98,210,255,0.15));
+    border: 1px solid rgba(98,210,255,0.35);
+    font-family: Orbitron;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .timeline__title { font-weight: 600; margin: 6px 0 8px; }
+  .timeline__points { margin: 0; padding-left: 18px; }
+  .timeline__points li { margin: 6px 0; }
+
+ * { box-sizing: border-box; }
+ html, body { margin:0; padding:0; background: radial-gradient(1200px at 10% 10%, var(--bg2), var(--bg)); color: var(--txt); font-family: Poppins, system-ui; }
 
 /* Navigation */
 .nav { position: sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; padding: 12px 24px; backdrop-filter: blur(12px); }

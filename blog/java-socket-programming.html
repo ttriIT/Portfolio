@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lập trình Socket với Java - Blog Lập Trình Mạng</title>
+    <meta
+      name="description"
+      content="So sánh blocking và non-blocking socket trong Java, ưu nhược điểm và hướng dẫn triển khai."
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="nav glass">
+      <div class="nav__brand">Blog Lập Trình</div>
+      <nav class="nav__links">
+        <a href="../index.html">Home</a>
+        <a href="../blog.html" class="active">Blog</a>
+        <a href="https://github.com/" target="_blank">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="blog-detail section">
+        <div class="container">
+          <h1 class="section__title">
+            Lập trình Socket với Java (blocking vs non-blocking)
+          </h1>
+          <div class="blog-detail__meta">
+            <span class="blog-detail__date">Ngày đăng: 25/10/2023</span>
+            <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+          </div>
+
+          <div class="blog-detail__image">
+            <img
+              src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop"
+              alt="Java Socket Programming"
+            />
+          </div>
+
+          <div class="blog-detail__content">
+            <h2 class="subsection__title">Blocking Socket trong Java</h2>
+            <p>
+              Blocking Socket là mô hình truyền thống trong lập trình mạng Java.
+              Khi một thread gọi các phương thức như <code>accept()</code>,
+              <code>read()</code>, hoặc <code>write()</code>, thread đó sẽ bị
+              chặn (block) cho đến khi hoạt động hoàn tất.
+            </p>
+
+            <pre><code>
+// Ví dụ Blocking Socket Server
+ServerSocket serverSocket = new ServerSocket(8080);
+while (true) {
+    Socket clientSocket = serverSocket.accept(); // Block cho đến khi có kết nối
+    
+    // Xử lý kết nối trong một thread riêng
+    new Thread(() -> {
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            
+            String line;
+            while ((line = in.readLine()) != null) { // Block cho đến khi có dữ liệu
+                System.out.println("Received: " + line);
+                out.println("Echo: " + line);
+            }
+            
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }).start();
+}
+                    </code></pre>
+
+            <h2 class="subsection__title">Non-blocking Socket với NIO</h2>
+            <p>
+              Java NIO (New I/O) giới thiệu mô hình non-blocking cho phép một
+              thread quản lý nhiều kết nối cùng lúc thông qua cơ chế
+              multiplexing với <code>Selector</code>.
+            </p>
+
+            <pre><code>
+// Ví dụ Non-blocking Socket Server với NIO
+ServerSocketChannel serverChannel = ServerSocketChannel.open();
+serverChannel.socket().bind(new InetSocketAddress(8080));
+serverChannel.configureBlocking(false);
+
+Selector selector = Selector.open();
+serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+
+while (true) {
+    selector.select(); // Block cho đến khi có sự kiện
+    
+    Set&lt;SelectionKey&gt; selectedKeys = selector.selectedKeys();
+    Iterator&lt;SelectionKey&gt; keyIterator = selectedKeys.iterator();
+    
+    while (keyIterator.hasNext()) {
+        SelectionKey key = keyIterator.next();
+        
+        if (key.isAcceptable()) {
+            // Xử lý sự kiện kết nối mới
+            ServerSocketChannel server = (ServerSocketChannel) key.channel();
+            SocketChannel client = server.accept();
+            client.configureBlocking(false);
+            client.register(selector, SelectionKey.OP_READ);
+        } else if (key.isReadable()) {
+            // Xử lý sự kiện có dữ liệu để đọc
+            SocketChannel client = (SocketChannel) key.channel();
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            int bytesRead = client.read(buffer);
+            
+            if (bytesRead > 0) {
+                buffer.flip();
+                client.write(buffer);
+                buffer.clear();
+            } else if (bytesRead < 0) {
+                // Kết nối đã đóng
+                client.close();
+                key.cancel();
+            }
+        }
+        
+        keyIterator.remove();
+    }
+}
+                    </code></pre>
+
+            <h2 class="subsection__title">
+              So sánh Blocking và Non-blocking Socket
+            </h2>
+            <table>
+              <tr>
+                <th>Đặc điểm</th>
+                <th>Blocking Socket</th>
+                <th>Non-blocking Socket (NIO)</th>
+              </tr>
+              <tr>
+                <td>Mô hình lập trình</td>
+                <td>Đơn giản, dễ hiểu</td>
+                <td>Phức tạp hơn</td>
+              </tr>
+              <tr>
+                <td>Hiệu suất</td>
+                <td>Thấp hơn với nhiều kết nối</td>
+                <td>Cao hơn với nhiều kết nối</td>
+              </tr>
+              <tr>
+                <td>Sử dụng tài nguyên</td>
+                <td>Một thread cho mỗi kết nối</td>
+                <td>Một thread cho nhiều kết nối</td>
+              </tr>
+              <tr>
+                <td>Khả năng mở rộng</td>
+                <td>Hạn chế</td>
+                <td>Tốt</td>
+              </tr>
+            </table>
+
+            <h2 class="subsection__title">
+              Khi nào sử dụng Blocking hoặc Non-blocking Socket?
+            </h2>
+            <ul>
+              <li>
+                <strong>Sử dụng Blocking Socket khi:</strong>
+                <ul>
+                  <li>Ứng dụng có số lượng kết nối đồng thời thấp</li>
+                  <li>Cần triển khai nhanh và đơn giản</li>
+                  <li>Mỗi kết nối cần xử lý phức tạp và độc lập</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Sử dụng Non-blocking Socket khi:</strong>
+                <ul>
+                  <li>Ứng dụng cần hỗ trợ hàng nghìn kết nối đồng thời</li>
+                  <li>Cần tối ưu hiệu suất và tài nguyên hệ thống</li>
+                  <li>Xây dựng server có khả năng mở rộng cao</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h2 class="subsection__title">Kết luận</h2>
+            <p>
+              Cả blocking và non-blocking socket đều có vai trò quan trọng trong
+              lập trình mạng Java. Việc lựa chọn giữa hai mô hình phụ thuộc vào
+              yêu cầu cụ thể của ứng dụng. Một lời khuyên hữu ích là bắt đầu với
+              blocking socket để hiểu rõ cơ chế hoạt động, sau đó chuyển sang
+              non-blocking socket khi cần tối ưu hiệu suất và khả năng mở rộng.
+            </p>
+          </div>
+
+          <div class="blog-detail__navigation">
+            <a href="../blog.html" class="btn btn--primary"
+              >Quay lại danh sách bài viết</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__copyright">
+            &copy; 2023 FuturNet. All rights reserved.
+          </div>
+          <div class="footer__social">
+            <a href="#" class="social-link">Facebook</a>
+            <a href="#" class="social-link">Twitter</a>
+            <a href="#" class="social-link">LinkedIn</a>
+            <a href="#" class="social-link">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

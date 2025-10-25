@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Async/Await trong JavaScript cho I/O mạng</title>
+  <meta name="description" content="Thực hành async/await cho tác vụ mạng: xử lý lỗi, hủy request, batch song song và kiểm soát timeout." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">Blog Lập Trình</div>
+    <nav class="nav__links">
+      <a href="../index.html">Home</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-detail section">
+      <div class="container">
+        <h1 class="section__title">Async/Await trong JS cho I/O mạng</h1>
+        <div class="blog-detail__meta">
+          <span class="blog-detail__date">Ngày đăng: 28/10/2023</span>
+          <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+        </div>
+        <div class="blog-detail__image">
+          <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=1200&auto=format&fit=crop" alt="Async/Await JavaScript" />
+        </div>
+        <div class="blog-detail__content">
+          <h2 class="subsection__title">Xử lý lỗi với try/catch</h2>
+          <pre><code>async function fetchJson(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  } catch (err) {
+    console.error('Request failed:', err);
+    throw err;
+  }
+}
+</code></pre>
+
+          <h2 class="subsection__title">Hủy request bằng AbortController</h2>
+          <pre><code>const controller = new AbortController();
+const id = setTimeout(() => controller.abort(), 5000);
+
+fetch('/api/data', { signal: controller.signal })
+  .then(...)
+  .catch(err => {
+    if (err.name === 'AbortError') console.log('Aborted');
+  });
+</code></pre>
+
+          <h2 class="subsection__title">Batch song song an toàn</h2>
+          <pre><code>const urls = ['a.json', 'b.json', 'c.json'];
+const results = await Promise.allSettled(urls.map(fetchJson));
+const ok = results.filter(r => r.status === 'fulfilled').map(r => r.value);
+</code></pre>
+
+          <h2 class="subsection__title">Timeout và retry backoff</h2>
+          <pre><code>async function withRetry(fn, { retries = 3, base = 500 } = {}) {
+  for (let i = 0; i <= retries; i++) {
+    try { return await fn(); } catch (e) {}
+    const delay = Math.min(30000, base * 2 ** i);
+    await new Promise(r => setTimeout(r, delay));
+  }
+  throw new Error('Max retries');
+}
+</code></pre>
+
+          <h2 class="subsection__title">Kết luận</h2>
+          <p>Async/Await giúp code gọn gàng, nhưng cần quản lý lỗi, timeout,
+          hủy request và batch cẩn thận để hệ thống ổn định.</p>
+        </div>
+        <div class="blog-detail__navigation">
+          <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__copyright">© 2025 FuturNet. All rights reserved.</div>
+        <div class="footer__social">
+          <a href="#" class="social-link">Facebook</a>
+          <a href="#" class="social-link">Twitter</a>
+          <a href="#" class="social-link">LinkedIn</a>
+          <a href="#" class="social-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

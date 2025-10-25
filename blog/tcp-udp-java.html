@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng quan TCP/UDP trong Java - Blog Lập Trình Mạng</title>
+    <meta name="description" content="Tìm hiểu chi tiết về TCP và UDP trong Java, so sánh và hướng dẫn sử dụng.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="nav glass">
+        <div class="nav__brand">Blog Lập Trình</div>
+        <nav class="nav__links">
+            <a href="../index.html">Home</a>
+            <a href="../blog.html" class="active">Blog</a>
+            <a href="https://github.com/" target="_blank">GitHub</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="blog-detail section">
+            <div class="container">
+                <h1 class="section__title">Tổng quan TCP/UDP trong Java</h1>
+                <div class="blog-detail__meta">
+                    <span class="blog-detail__date">Ngày đăng: 24/10/2023</span>
+                    <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+                </div>
+                
+                <div class="blog-detail__image">
+                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200&auto=format&fit=crop" alt="TCP/UDP Java">
+                </div>
+                
+                <div class="blog-detail__content">
+                    <h2 class="subsection__title">Giới thiệu về TCP và UDP</h2>
+                    <p>TCP (Transmission Control Protocol) và UDP (User Datagram Protocol) là hai giao thức truyền tải dữ liệu phổ biến nhất trong mô hình TCP/IP. Mỗi giao thức có những đặc điểm và ứng dụng riêng biệt.</p>
+                    
+                    <h2 class="subsection__title">TCP trong Java</h2>
+                    <p>TCP là giao thức hướng kết nối, đảm bảo độ tin cậy cao trong việc truyền dữ liệu. Trong Java, lập trình TCP được thực hiện thông qua các lớp Socket và ServerSocket.</p>
+                    
+                    <pre><code>
+// Ví dụ TCP Server
+ServerSocket serverSocket = new ServerSocket(8080);
+Socket clientSocket = serverSocket.accept();
+BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+// Ví dụ TCP Client
+Socket socket = new Socket("localhost", 8080);
+BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                    </code></pre>
+                    
+                    <h2 class="subsection__title">UDP trong Java</h2>
+                    <p>UDP là giao thức không kết nối, ưu tiên tốc độ hơn độ tin cậy. Trong Java, lập trình UDP được thực hiện thông qua lớp DatagramSocket và DatagramPacket.</p>
+                    
+                    <pre><code>
+// Ví dụ UDP Server
+DatagramSocket socket = new DatagramSocket(8080);
+byte[] buffer = new byte[1024];
+DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+socket.receive(packet);
+
+// Ví dụ UDP Client
+DatagramSocket socket = new DatagramSocket();
+InetAddress address = InetAddress.getByName("localhost");
+byte[] buffer = "Hello, UDP!".getBytes();
+DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 8080);
+socket.send(packet);
+                    </code></pre>
+                    
+                    <h2 class="subsection__title">So sánh TCP và UDP</h2>
+                    <table>
+                        <tr>
+                            <th>Đặc điểm</th>
+                            <th>TCP</th>
+                            <th>UDP</th>
+                        </tr>
+                        <tr>
+                            <td>Kết nối</td>
+                            <td>Hướng kết nối</td>
+                            <td>Không kết nối</td>
+                        </tr>
+                        <tr>
+                            <td>Độ tin cậy</td>
+                            <td>Cao (có cơ chế xác nhận)</td>
+                            <td>Thấp (không có cơ chế xác nhận)</td>
+                        </tr>
+                        <tr>
+                            <td>Tốc độ</td>
+                            <td>Chậm hơn</td>
+                            <td>Nhanh hơn</td>
+                        </tr>
+                        <tr>
+                            <td>Thứ tự gói tin</td>
+                            <td>Đảm bảo</td>
+                            <td>Không đảm bảo</td>
+                        </tr>
+                        <tr>
+                            <td>Ứng dụng</td>
+                            <td>Web, Email, FTP</td>
+                            <td>Video streaming, VoIP, Game online</td>
+                        </tr>
+                    </table>
+                    
+                    <h2 class="subsection__title">Khi nào sử dụng TCP hoặc UDP?</h2>
+                    <p>Việc lựa chọn giữa TCP và UDP phụ thuộc vào yêu cầu cụ thể của ứng dụng:</p>
+                    <ul>
+                        <li><strong>Sử dụng TCP khi:</strong> Cần đảm bảo dữ liệu được truyền đầy đủ và chính xác (như truyền file, web browsing, email).</li>
+                        <li><strong>Sử dụng UDP khi:</strong> Cần tốc độ cao và có thể chấp nhận mất một số gói tin (như video streaming, game online, VoIP).</li>
+                    </ul>
+                    
+                    <h2 class="subsection__title">Kết luận</h2>
+                    <p>Hiểu rõ về TCP và UDP trong Java là nền tảng quan trọng cho việc phát triển các ứng dụng mạng. Mỗi giao thức có những ưu điểm và hạn chế riêng, việc lựa chọn giao thức phù hợp sẽ giúp tối ưu hiệu suất của ứng dụng.</p>
+                </div>
+                
+                <div class="blog-detail__navigation">
+                    <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__copyright">
+                    &copy; 2023 FuturNet. All rights reserved.
+                </div>
+                <div class="footer__social">
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

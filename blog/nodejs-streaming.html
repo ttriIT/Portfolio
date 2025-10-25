@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Streaming dữ liệu với Node.js</title>
+  <meta name="description" content="Áp dụng stream để giảm bộ nhớ và tăng throughput: tải tệp, proxy data, backpressure và pipeline tối ưu." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">Blog Lập Trình</div>
+    <nav class="nav__links">
+      <a href="../index.html">Home</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-detail section">
+      <div class="container">
+        <h1 class="section__title">Streaming dữ liệu với Node.js</h1>
+        <div class="blog-detail__meta">
+          <span class="blog-detail__date">Ngày đăng: 29/10/2023</span>
+          <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+        </div>
+        <div class="blog-detail__image">
+          <img src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1200&auto=format&fit=crop" alt="Node.js Streaming" />
+        </div>
+        <div class="blog-detail__content">
+          <h2 class="subsection__title">Tải file hiệu quả</h2>
+<pre><code>// Stream file đến client
+app.get('/download', (req, res) => {
+  const stream = fs.createReadStream('bigfile.zip');
+  stream.pipe(res);
+});
+</code></pre>
+
+          <h2 class="subsection__title">Proxy dữ liệu và backpressure</h2>
+<pre><code>http.request(opts, (upstream) => {
+  upstream.on('data', chunk => {
+    if (!client.write(chunk)) upstream.pause();
+  });
+  client.on('drain', () => upstream.resume());
+});
+</code></pre>
+
+          <h2 class="subsection__title">Pipeline và transform</h2>
+<pre><code>const { pipeline } = require('stream');
+pipeline(source, transform, destination, (err) => {
+  if (err) console.error('Pipeline failed', err);
+});
+</code></pre>
+
+          <h2 class="subsection__title">Kết luận</h2>
+          <p>Stream phù hợp cho dữ liệu lớn, giảm bộ nhớ và tăng tốc độ.
+          Luôn xử lý backpressure để tránh nghẽn và mất dữ liệu.</p>
+        </div>
+        <div class="blog-detail__navigation">
+          <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__copyright">© 2025 FuturNet. All rights reserved.</div>
+        <div class="footer__social">
+          <a href="#" class="social-link">Facebook</a>
+          <a href="#" class="social-link">Twitter</a>
+          <a href="#" class="social-link">LinkedIn</a>
+          <a href="#" class="social-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

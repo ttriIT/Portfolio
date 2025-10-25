@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket với JavaScript - Blog Lập Trình Mạng</title>
+    <meta name="description" content="Tìm hiểu về WebSocket trong JavaScript, kiến trúc và các giải pháp fallback.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="nav glass">
+        <div class="nav__brand">Blog Lập Trình</div>
+        <nav class="nav__links">
+            <a href="../index.html">Home</a>
+            <a href="../blog.html" class="active">Blog</a>
+            <a href="https://github.com/" target="_blank">GitHub</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="blog-detail section">
+            <div class="container">
+                <h1 class="section__title">WebSocket với JavaScript: kiến trúc và fallback</h1>
+                <div class="blog-detail__meta">
+                    <span class="blog-detail__date">Ngày đăng: 26/10/2023</span>
+                    <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+                </div>
+                
+                <div class="blog-detail__image">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop" alt="WebSocket JavaScript">
+                </div>
+                
+                <div class="blog-detail__content">
+                    <h2 class="subsection__title">Giới thiệu về WebSocket</h2>
+                    <p>WebSocket là một giao thức truyền thông hai chiều, full-duplex trên một kết nối TCP duy nhất. WebSocket cho phép tương tác giữa trình duyệt và máy chủ với độ trễ thấp hơn so với HTTP.</p>
+                    
+                    <h2 class="subsection__title">Kiến trúc WebSocket</h2>
+                    <p>WebSocket hoạt động theo mô hình client-server, nhưng khác với HTTP truyền thống, WebSocket thiết lập một kết nối duy trì lâu dài (persistent connection) giữa client và server. Sau khi kết nối được thiết lập, cả client và server đều có thể gửi dữ liệu bất kỳ lúc nào mà không cần phải khởi tạo kết nối mới.</p>
+                    
+                    <pre><code>
+// Khởi tạo WebSocket connection
+const socket = new WebSocket('ws://example.com/socket');
+
+// Xử lý sự kiện khi kết nối được mở
+socket.onopen = function(event) {
+    console.log('WebSocket connection established');
+    socket.send('Hello Server!');
+};
+
+// Xử lý sự kiện khi nhận được tin nhắn
+socket.onmessage = function(event) {
+    console.log('Message from server:', event.data);
+};
+
+// Xử lý sự kiện khi kết nối bị đóng
+socket.onclose = function(event) {
+    console.log('WebSocket connection closed:', event.code, event.reason);
+};
+
+// Xử lý sự kiện khi có lỗi
+socket.onerror = function(error) {
+    console.error('WebSocket error:', error);
+};
+                    </code></pre>
+                    
+                    <h2 class="subsection__title">Fallback cho WebSocket</h2>
+                    <p>Mặc dù WebSocket được hỗ trợ rộng rãi trong các trình duyệt hiện đại, nhưng vẫn cần có các giải pháp fallback cho những trường hợp WebSocket không khả dụng (ví dụ: do tường lửa, proxy, hoặc trình duyệt cũ).</p>
+                    
+                    <h3>1. Server-Sent Events (SSE)</h3>
+                    <p>SSE cho phép server gửi dữ liệu đến client một cách tự động. Tuy nhiên, SSE chỉ hỗ trợ truyền dữ liệu một chiều từ server đến client.</p>
+                    
+                    <pre><code>
+// Client-side SSE
+const eventSource = new EventSource('/events');
+
+eventSource.onmessage = function(event) {
+    console.log('New message:', event.data);
+};
+
+eventSource.onerror = function(error) {
+    console.error('EventSource error:', error);
+    eventSource.close();
+};
+                    </code></pre>
+                    
+                    <h3>2. Long Polling</h3>
+                    <p>Long Polling là kỹ thuật trong đó client gửi một request HTTP đến server và server giữ kết nối mở cho đến khi có dữ liệu mới để gửi hoặc đến khi hết thời gian timeout.</p>
+                    
+                    <pre><code>
+// Long Polling implementation
+function longPoll() {
+    fetch('/poll')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Received data:', data);
+            // Xử lý dữ liệu
+            
+            // Tiếp tục long polling
+            longPoll();
+        })
+        .catch(error => {
+            console.error('Long polling error:', error);
+            // Thử lại sau một khoảng thời gian
+            setTimeout(longPoll, 5000);
+        });
+}
+
+// Bắt đầu long polling
+longPoll();
+                    </code></pre>
+                    
+                    <h2 class="subsection__title">Quản lý kết nối WebSocket</h2>
+                    <p>Để đảm bảo kết nối WebSocket ổn định và đáng tin cậy, cần triển khai các cơ chế sau:</p>
+                    
+                    <h3>1. Reconnection</h3>
+                    <p>Tự động kết nối lại khi kết nối bị đóng hoặc gặp lỗi.</p>
+                    
+                    <pre><code>
+function createWebSocket() {
+    const socket = new WebSocket('ws://example.com/socket');
+    
+    socket.onclose = function(event) {
+        console.log('WebSocket closed, reconnecting...');
+        // Kết nối lại sau 1 giây
+        setTimeout(createWebSocket, 1000);
+    };
+    
+    socket.onerror = function(error) {
+        console.error('WebSocket error:', error);
+        socket.close(); // Đóng kết nối để kích hoạt onclose
+    };
+    
+    // Các xử lý khác...
+    
+    return socket;
+}
+
+let socket = createWebSocket();
+                    </code></pre>
+                    
+                    <h3>2. Heartbeat (Ping/Pong)</h3>
+                    <p>Gửi tin nhắn "ping" định kỳ để giữ kết nối hoạt động và phát hiện kết nối bị đứt.</p>
+                    
+                    <pre><code>
+function setupHeartbeat(socket) {
+    let pingInterval;
+    let pingTimeout;
+    
+    function heartbeat() {
+        clearTimeout(pingTimeout);
+        
+        // Đặt timeout để phát hiện nếu server không phản hồi
+        pingTimeout = setTimeout(() => {
+            console.log('Server not responding, closing connection');
+            socket.close();
+        }, 30000); // 30 giây
+    }
+    
+    socket.onopen = function() {
+        // Gửi ping mỗi 25 giây
+        pingInterval = setInterval(() => {
+            socket.send(JSON.stringify({ type: 'ping' }));
+        }, 25000);
+        
+        heartbeat();
+    };
+    
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        
+        if (data.type === 'pong') {
+            heartbeat();
+        } else {
+            // Xử lý tin nhắn thông thường
+        }
+    };
+    
+    socket.onclose = function() {
+        clearInterval(pingInterval);
+        clearTimeout(pingTimeout);
+    };
+}
+                    </code></pre>
+                    
+                    <h3>3. Exponential Backoff</h3>
+                    <p>Tăng dần thời gian chờ giữa các lần kết nối lại để tránh làm quá tải server.</p>
+                    
+                    <pre><code>
+function connectWithBackoff() {
+    let retryCount = 0;
+    const maxRetry = 10;
+    const baseDelay = 1000; // 1 giây
+    
+    function connect() {
+        const socket = new WebSocket('ws://example.com/socket');
+        
+        socket.onopen = function() {
+            console.log('Connected successfully');
+            retryCount = 0;
+            // Xử lý kết nối thành công
+        };
+        
+        socket.onclose = function() {
+            if (retryCount < maxRetry) {
+                retryCount++;
+                
+                // Tính toán thời gian chờ với exponential backoff
+                const delay = Math.min(30000, baseDelay * Math.pow(2, retryCount)); // Tối đa 30 giây
+                
+                console.log(`Reconnecting in ${delay}ms (attempt ${retryCount}/${maxRetry})`);
+                setTimeout(connect, delay);
+            } else {
+                console.log('Max retry reached, giving up');
+                // Thông báo cho người dùng hoặc chuyển sang fallback
+            }
+        };
+        
+        return socket;
+    }
+    
+    return connect();
+}
+
+const socket = connectWithBackoff();
+                    </code></pre>
+                    
+                    <h2 class="subsection__title">Kết luận</h2>
+                    <p>WebSocket là công nghệ mạnh mẽ cho các ứng dụng real-time, nhưng cần được triển khai cẩn thận với các cơ chế quản lý kết nối và fallback phù hợp. Việc kết hợp WebSocket với các giải pháp fallback như SSE hoặc Long Polling sẽ giúp ứng dụng của bạn hoạt động tốt trong mọi môi trường.</p>
+                </div>
+                
+                <div class="blog-detail__navigation">
+                    <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__copyright">
+                    &copy; 2023 FuturNet. All rights reserved.
+                </div>
+                <div class="footer__social">
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Load Balancing và Scaling</title>
+  <meta name="description" content="Các chiến lược cân bằng tải và mở rộng: reverse proxy, sticky session, health-check, hàng đợi và autoscaling." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">Blog Lập Trình</div>
+    <nav class="nav__links">
+      <a href="../index.html">Home</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-detail section">
+      <div class="container">
+        <h1 class="section__title">Load Balancing và Scaling</h1>
+        <div class="blog-detail__meta">
+          <span class="blog-detail__date">Ngày đăng: 30/10/2023</span>
+          <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+        </div>
+        <div class="blog-detail__image">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop" alt="Load Balancing" />
+        </div>
+        <div class="blog-detail__content">
+          <h2 class="subsection__title">Reverse proxy và thuật toán</h2>
+          <p>Dùng Nginx/HAProxy; các thuật toán Round Robin, Least Connections, IP Hash. Bật health-check, circuit breaker để tự hồi phục.</p>
+
+          <h2 class="subsection__title">Sticky session</h2>
+          <p>Áp dụng khi session chứa state; cân nhắc chuyển state ra ngoài (Redis) để dễ scale ngang.</p>
+
+          <h2 class="subsection__title">Hàng đợi và xử lý bất đồng bộ</h2>
+          <p>RabbitMQ/Kafka để decouple, xử lý burst. Thêm dead-letter queue và retry policy.</p>
+
+          <h2 class="subsection__title">Autoscaling và quan sát</h2>
+          <p>Scale theo CPU/latency/queue depth. Theo dõi p95/p99, error rate, saturation để quyết định thời điểm scale.</p>
+
+          <h2 class="subsection__title">Kết luận</h2>
+          <p>Thiết kế cho scale từ đầu: stateless service, externalized state, và quan sát tốt giúp hệ thống ổn định.</p>
+        </div>
+        <div class="blog-detail__navigation">
+          <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__copyright">© 2025 FuturNet. All rights reserved.</div>
+        <div class="footer__social">
+          <a href="#" class="social-link">Facebook</a>
+          <a href="#" class="social-link">Twitter</a>
+          <a href="#" class="social-link">LinkedIn</a>
+          <a href="#" class="social-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

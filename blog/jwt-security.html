@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bảo mật API với JWT</title>
+  <meta name="description" content="Thực hành bảo mật API với JWT: ký token, expiry, refresh, rotate, quyền hạn và audit logs." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">Blog Lập Trình</div>
+    <nav class="nav__links">
+      <a href="../index.html">Home</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-detail section">
+      <div class="container">
+        <h1 class="section__title">Bảo mật API với JWT</h1>
+        <div class="blog-detail__meta">
+          <span class="blog-detail__date">Ngày đăng: 31/10/2023</span>
+          <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+        </div>
+        <div class="blog-detail__image">
+          <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1200&auto=format&fit=crop" alt="JWT Security" />
+        </div>
+        <div class="blog-detail__content">
+          <h2 class="subsection__title">Ký và xác thực JWT</h2>
+          <p>Luôn ký JWT với HMAC hoặc RSA; xác thực chữ ký, issuer, audience và expiry trên backend.</p>
+
+          <h2 class="subsection__title">Quản lý thời hạn và refresh token</h2>
+          <p>Đặt expiry ngắn cho access token; lưu refresh token an toàn (HTTP-only cookie) và rotate mỗi lần sử dụng.</p>
+
+          <h2 class="subsection__title">Phân quyền và audit</h2>
+          <p>Kiểm tra quyền ở backend; ghi log hành động quan trọng để audit và phát hiện bất thường.</p>
+
+          <h2 class="subsection__title">Mẹo phòng thủ</h2>
+          <ul>
+            <li>Không lưu JWT trong localStorage nếu có thể bị XSS.</li>
+            <li>Thêm <code>jti</code> để hỗ trợ revoke theo danh sách đen.</li>
+            <li>Giới hạn phạm vi (scope) của token theo nguyên tắc tối thiểu.</li>
+          </ul>
+
+          <h2 class="subsection__title">Kết luận</h2>
+          <p>JWT mạnh nhưng phải dùng đúng cách: ký, xác thực chặt chẽ và quản trị vòng đời token.</p>
+        </div>
+        <div class="blog-detail__navigation">
+          <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__copyright">© 2025 FuturNet. All rights reserved.</div>
+        <div class="footer__social">
+          <a href="#" class="social-link">Facebook</a>
+          <a href="#" class="social-link">Twitter</a>
+          <a href="#" class="social-link">LinkedIn</a>
+          <a href="#" class="social-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

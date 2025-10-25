@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập trình Socket trong Java - Blog Lập Trình Mạng</title>
+    <meta name="description" content="Tìm hiểu chi tiết về lập trình Socket trong Java, cách tạo kết nối client-server và xử lý dữ liệu mạng.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <a href="index.html" class="brand">FuturNet</a>
+                <nav class="nav">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="index.html" class="nav__link">Home</a></li>
+                        <li class="nav__item"><a href="blog.html" class="nav__link active">Blog</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-detail section">
+            <div class="container">
+                <h1 class="section__title">Lập trình Socket trong Java</h1>
+                <div class="blog-detail__meta">
+                    <span class="blog-detail__date">Ngày đăng: 24/10/2023</span>
+                    <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+                </div>
+                
+                <div class="blog-detail__image">
+                    <img src="https://via.placeholder.com/800x400?text=Java+Socket+Programming" alt="Lập trình Socket trong Java">
+                </div>
+                
+                <div class="blog-detail__content">
+                    <h2 class="subsection__title">Giới thiệu về Socket trong Java</h2>
+                    <p>Socket là một giao diện lập trình ứng dụng (API) cho phép các ứng dụng giao tiếp qua mạng. Trong Java, lập trình Socket được hỗ trợ thông qua package java.net, cung cấp các lớp và phương thức để tạo kết nối mạng giữa client và server.</p>
+                    
+                    <h2 class="subsection__title">Mô hình Client-Server</h2>
+                    <p>Mô hình Client-Server là mô hình phổ biến trong lập trình mạng. Server lắng nghe các yêu cầu từ client trên một cổng cụ thể, trong khi client khởi tạo kết nối đến server. Java cung cấp hai lớp chính để thực hiện mô hình này:</p>
+                    <ul>
+                        <li><strong>ServerSocket</strong>: Được sử dụng bởi server để lắng nghe các kết nối từ client.</li>
+                        <li><strong>Socket</strong>: Được sử dụng bởi cả client và server để giao tiếp với nhau sau khi kết nối được thiết lập.</li>
+                    </ul>
+                    
+                    <h2 class="subsection__title">Ví dụ về Server Socket</h2>
+                    <pre><code>
+import java.io.*;
+import java.net.*;
+
+public class SimpleServer {
+    public static void main(String[] args) {
+        try {
+            // Tạo server socket trên cổng 5000
+            ServerSocket serverSocket = new ServerSocket(5000);
+            System.out.println("Server đang lắng nghe trên cổng 5000...");
+            
+            // Chấp nhận kết nối từ client
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client đã kết nối: " + clientSocket.getInetAddress());
+            
+            // Tạo luồng đầu vào và đầu ra
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            
+            // Đọc dữ liệu từ client
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println("Nhận từ client: " + inputLine);
+                
+                // Gửi phản hồi đến client
+                out.println("Server nhận được: " + inputLine);
+                
+                // Thoát nếu client gửi "exit"
+                if (inputLine.equals("exit")) {
+                    break;
+                }
+            }
+            
+            // Đóng các kết nối
+            in.close();
+            out.close();
+            clientSocket.close();
+            serverSocket.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+                    </code></pre>
+                    
+                    <h2 class="subsection__title">Ví dụ về Client Socket</h2>
+                    <pre><code>
+import java.io.*;
+import java.net.*;
+
+public class SimpleClient {
+    public static void main(String[] args) {
+        try {
+            // Kết nối đến server
+            Socket socket = new Socket("localhost", 5000);
+            System.out.println("Đã kết nối đến server.");
+            
+            // Tạo luồng đầu vào và đầu ra
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+            
+            String userInput;
+            System.out.println("Nhập tin nhắn (gõ 'exit' để thoát):");
+            
+            // Đọc dữ liệu từ bàn phím và gửi đến server
+            while ((userInput = stdIn.readLine()) != null) {
+                out.println(userInput);
+                
+                // Đọc phản hồi từ server
+                String serverResponse = in.readLine();
+                System.out.println("Server trả lời: " + serverResponse);
+                
+                // Thoát nếu người dùng nhập "exit"
+                if (userInput.equals("exit")) {
+                    break;
+                }
+            }
+            
+            // Đóng các kết nối
+            in.close();
+            out.close();
+            stdIn.close();
+            socket.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+                    </code></pre>
+                    
+                    <h2 class="subsection__title">Xử lý nhiều Client cùng lúc</h2>
+                    <p>Trong thực tế, một server thường phải xử lý nhiều client cùng một lúc. Để làm được điều này, chúng ta có thể sử dụng đa luồng (multithreading) trong Java. Mỗi khi một client kết nối đến server, server sẽ tạo một luồng mới để xử lý client đó, trong khi luồng chính tiếp tục lắng nghe các kết nối mới.</p>
+                    
+                    <h2 class="subsection__title">Kết luận</h2>
+                    <p>Lập trình Socket trong Java là một công cụ mạnh mẽ để phát triển các ứng dụng mạng. Với các lớp ServerSocket và Socket, Java cung cấp một cách đơn giản và hiệu quả để tạo kết nối mạng giữa các ứng dụng. Tuy nhiên, để phát triển các ứng dụng mạng phức tạp hơn, bạn có thể cần tìm hiểu thêm về các công nghệ khác như NIO (Non-blocking I/O) hoặc các framework mạng như Netty.</p>
+                </div>
+                
+                <div class="blog-detail__navigation">
+                    <a href="blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__copyright">
+                    &copy; 2023 FuturNet. All rights reserved.
+                </div>
+                <div class="footer__social">
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

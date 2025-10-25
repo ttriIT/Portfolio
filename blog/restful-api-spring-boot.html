@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiết kế RESTful API với Spring Boot</title>
+  <meta name="description" content="Hướng dẫn thiết kế RESTful API chuẩn với Spring Boot: cấu trúc, DTO, validation, rate limiting và observability." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">Blog Lập Trình</div>
+    <nav class="nav__links">
+      <a href="../index.html">Home</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-detail section">
+      <div class="container">
+        <h1 class="section__title">Thiết kế RESTful API với Spring Boot</h1>
+        <div class="blog-detail__meta">
+          <span class="blog-detail__date">Ngày đăng: 27/10/2023</span>
+          <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+        </div>
+
+        <div class="blog-detail__image">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" alt="RESTful API Spring Boot" />
+        </div>
+
+        <div class="blog-detail__content">
+          <h2 class="subsection__title">Cấu trúc dự án</h2>
+          <p>Tách lớp controller, service, repository; dùng DTO cho payload và entity cho persistence. Áp dụng validation với <code>javax.validation</code>.</p>
+
+<pre><code>// Controller mẫu
+@RestController
+@RequestMapping("/api/v1/users")
+public class UserController {
+  private final UserService service;
+  public UserController(UserService service) { this.service = service; }
+
+  @GetMapping
+  public List&lt;UserDto&gt; list() { return service.list(); }
+
+  @PostMapping
+  public ResponseEntity&lt;UserDto&gt; create(@Valid @RequestBody CreateUserDto dto) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
+  }
+}
+</code></pre>
+
+          <h2 class="subsection__title">Error handling & tiêu chuẩn HTTP</h2>
+          <p>Sử dụng <code>@ControllerAdvice</code> để gom lỗi, trả về mã trạng thái phù hợp (400, 404, 409, 500). Bao gồm <code>traceId</code> để theo dõi.</p>
+
+<pre><code>@ControllerAdvice
+public class ApiExceptionHandler {
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  ResponseEntity&lt;ApiError&gt; handleValidation(...) { /* ... */ }
+}
+</code></pre>
+
+          <h2 class="subsection__title">Rate limit, caching, observability</h2>
+          <ul>
+            <li>Rate limit: Bucket4j hoặc gateway (Nginx/API Gateway).</li>
+            <li>Caching: <code>@Cacheable</code> với Redis cho dữ liệu đọc nhiều.</li>
+            <li>Observability: Micrometer + Prometheus + Grafana theo dõi latency p95/p99.</li>
+          </ul>
+
+          <h2 class="subsection__title">Bảo mật</h2>
+          <p>Bật Spring Security, kiểm tra quyền ở backend, tránh để lộ thông tin qua lỗi. Sử dụng JWT hoặc OAuth2/OpenID Connect.</p>
+
+          <h2 class="subsection__title">Kết luận</h2>
+          <p>Thiết kế chuẩn giúp API dễ bảo trì, an toàn và quan sát tốt. Bắt đầu đơn giản, thêm dần các lớp bảo vệ và giám sát.</p>
+        </div>
+
+        <div class="blog-detail__navigation">
+          <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__copyright">© 2025 FuturNet. All rights reserved.</div>
+        <div class="footer__social">
+          <a href="#" class="social-link">Facebook</a>
+          <a href="#" class="social-link">Twitter</a>
+          <a href="#" class="social-link">LinkedIn</a>
+          <a href="#" class="social-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

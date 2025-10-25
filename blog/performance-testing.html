@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiểm thử hiệu năng: JMH và k6</title>
+  <meta name="description" content="Đo hiệu năng với JMH cho Java và kiểm thử tải API bằng k6: thiết lập, chỉ số và tối ưu." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="nav glass">
+    <div class="nav__brand">Blog Lập Trình</div>
+    <nav class="nav__links">
+      <a href="../index.html">Home</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="https://github.com/" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="blog-detail section">
+      <div class="container">
+        <h1 class="section__title">Kiểm thử hiệu năng: JMH và k6</h1>
+        <div class="blog-detail__meta">
+          <span class="blog-detail__date">Ngày đăng: 01/11/2023</span>
+          <span class="blog-detail__author">Tác giả: Nguyễn Văn A</span>
+        </div>
+        <div class="blog-detail__image">
+          <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=1200&auto=format&fit=crop" alt="Performance Testing" />
+        </div>
+        <div class="blog-detail__content">
+          <h2 class="subsection__title">Micro-benchmark với JMH</h2>
+<pre><code>@Benchmark
+public void measure() {
+  // Đo đoạn code cụ thể
+}
+</code></pre>
+          <p>Thiết lập warmup, measurement, forks để kết quả ổn định; theo dõi throughput và phân phối latency.</p>
+
+          <h2 class="subsection__title">Kiểm thử tải API với k6</h2>
+<pre><code>import http from 'k6/http';
+import { sleep } from 'k6';
+
+export default function() {
+  http.get('https://api.example.com/v1/items');
+  sleep(1);
+}
+</code></pre>
+          <p>Đặt VUs, duration, stages; theo dõi error rate, p95/p99 latency và xử lý bottlenecks dựa trên metrics.</p>
+
+          <h2 class="subsection__title">Kết luận</h2>
+          <p>Xây dựng baseline, đo lường liên tục và tối ưu dựa trên profile thực tế để cải thiện hiệu năng.</p>
+        </div>
+        <div class="blog-detail__navigation">
+          <a href="../blog.html" class="btn btn--primary">Quay lại danh sách bài viết</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__copyright">© 2025 FuturNet. All rights reserved.</div>
+        <div class="footer__social">
+          <a href="#" class="social-link">Facebook</a>
+          <a href="#" class="social-link">Twitter</a>
+          <a href="#" class="social-link">LinkedIn</a>
+          <a href="#" class="social-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
